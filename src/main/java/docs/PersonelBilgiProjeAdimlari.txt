@@ -1,0 +1,6 @@
+﻿
+Proje Adımları
+------------------
+
+
+1) Maven Web projesi yaratalım.

@@ -82,6 +82,7 @@ public class Kisi implements Serializable {
         }
     }
     
+    
     @PreUpdate
     public void preUpdateMethod()
     {

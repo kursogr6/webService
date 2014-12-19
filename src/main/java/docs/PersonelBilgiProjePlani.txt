@@ -1,0 +1,207 @@
+﻿PersonelBilgi
+-----------------------------
+
+Kisi
+-------------
+id   int(10)
+ad   varchar(20)
+soyad varchar(20)
+
+
+Telefon
+-------------
+id  int(10)
+tel_no varchar(30)
+kisi_id int(10)
+
+
+
+
+create database personelbilgi;
+
+
+create table KISI
+(
+   id int(10) auto_increment,
+   ad varchar(20) not null,
+   soyad varchar(20) not null,
+   primary key(id) 
+);
+
+
+create table TELEFON
+(
+   id int(10) auto_increment,
+   tel_no varchar(30),
+   kisi_id int(10),
+   primary key(id),
+   constraint FK_TEL_KISIID_KISI_ID foreign key(kisi_id) references kisi(id)  
+);
+
+
+
+
+
+
+Kayit.xhtml --> KayitBean --> KisiService --> KisiFacade --> Kisi
+   JSF        Managed Bean   Session Bean    Session Bean   Entity Bean 
+                               Stateless             
+
+
+
+Maven Projesi
+
+Github'a projeyi gönder.
+
+
+
+
+
+Proje Adımları
+------------------
+
+1 Github'da hesap aç.
+
+
+2 Maven Web projesi yaratalım.
+
+
+3 Veritabanı tablolarını yaratalım.
+
+
+4 Package yapısını oluşturalım. (entity, facade, bean, service)
+
+
+5 Proje source'unda docs folder yarattık, içine db_script.txt oluşturduk. 
+  veritabanı yaratma kodlarını bu dosyaya koyduk.
+
+6 git source control sisteme projeyi koyalım.
+
+
+7 proje glassfishle ilişkilenmiş mi bakalım. (properties --> run)
+
+
+8 Entity bean'leri yaratalım.
+
+
+9 Projeyi Github'a koyalım. (sağ tıkla --> git --> remote --> push)
+
+
+10 Telefon classında kisiId degiskenini duzelt.
+   Kisi classında da onetomany bağlantıda mappedby düzeltelim.
+
+
+11 facade paketine session beanleri oluştur.
+
+12 AbstractFacade classında edit metodunun adını update olarak değiştirelim.
+
+13 persistence.xml isim düzeltelim.
+   Facadelarda da düzeltilecek.
+
+
+14 WEB-INF altına web.xml ekle.
+
+15 web.xml e JSF ile ilgili bölümleri ekle.
+
+16 kayit.xhtml yarat. (index.html de sil.)
+   sayfaya primefaces desteği ekle. (eski projelerden primefaces declatation ı al, sayfanın tepesine yapıştır.)
+
+
+17 pom.xml e primefaces, primefaces theme, mysql jdbc ekle.
+
+18 kayit.xhtml sayfasının kodunu yaz.
+
+19 Projeyi run edelim.
+
+20 Primefaces theme değiştiriyoruz.
+
+21 KayitBean yaratıyoruz.
+
+22 kayit.xhtml sayfa bindinglerini bean e bağlayalım.
+
+23 KisiService session beanini yarat, ekle metodu koy.
+
+24 KayitBean ekle metodu yazıyoruz.
+
+25 Projeyi çalıştıralım. veritabanından kontrol edelim.
+
+26 kayit.xhtml e Ekle butonu ekliyoruz.
+
+27 Kisi entitysinde şıu düzeltmeyi yapmak zorunda kaldık. CascadeType otomatik eklenmesi gerekiyordu, eklenmemişti, elle ekledik.
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "kisi")
+    private List<Telefon> telefonList;
+
+28 KayitBean ekle metodunu şu hale getirdik: (sayfadaki componentlerin boş gelmesi için.)
+
+public void ekle()
+    {
+       
+        //one-to-many çift taraflı, ikisinden de set etmek gerekiyor.
+        List<Telefon> telefonList = new ArrayList<Telefon>();
+        
+        telefonList.add(evTel);
+        telefonList.add(cepTel);
+        
+        kisi.setTelefonList(telefonList);
+        cepTel.setKisi(kisi);
+        evTel.setKisi(kisi);
+        
+        kisiService.ekle(kisi);   
+        
+        kisi = new Kisi();
+        cepTel = new Telefon();
+        evTel = new Telefon();
+        
+        
+        
+    }
+
+
+kayit.xhtml Ekle butonunu da şöyle yaptık.
+
+ <p:commandButton value="Ekle" action="#{kayitBean.ekle()}" update="@form"/>
+
+
+29 one-to-many bağlantıda iki tartan birden set etmekten kaçınmak için, yani şundan,
+
+
+kisi.setTelefonList(telefonList);
+cepTel.setKisi(kisi);
+evTel.setKisi(kisi);
+
+
+master clasın prepersist ve preupdate metodlarını set ediyoruz.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -8,6 +8,7 @@ package com.javakurs.personelbilgi.entity;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -51,7 +54,7 @@ public class Kisi implements Serializable {
     @Size(min = 1, max = 20)
     @Column(nullable = false, length = 20)
     private String soyad;
-    @OneToMany(mappedBy = "kisi")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kisi")
     private List<Telefon> telefonList;
 
     public Kisi() {
@@ -69,6 +72,22 @@ public class Kisi implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+    
+    @PrePersist
+    public void prePersistMethod()
+    {
+        for (Telefon telefon : telefonList) {
+            telefon.setKisi(this);
+        }
+    }
+    
+    @PreUpdate
+    public void preUpdateMethod()
+    {
+        for (Telefon telefon : telefonList) {
+            telefon.setKisi(this);
+        }
     }
 
     public void setId(Integer id) {

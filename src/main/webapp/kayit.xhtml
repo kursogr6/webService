@@ -22,7 +22,7 @@
                 <p:outputLabel value="Ev Tel:"/>
                 <p:inputText value="#{kayitBean.evTel.telNo}"/>
                 <f:facet name="footer">
-                    <p:commandButton value="Ekle" action="#{kayitBean.ekle()}"/>
+                    <p:commandButton value="Ekle" action="#{kayitBean.ekle()}" update="@form"/>
                 </f:facet>
             </p:panelGrid>
         </h:form>

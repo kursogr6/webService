@@ -163,7 +163,7 @@ kayit.xhtml Ekle butonunu da şöyle yaptık.
  <p:commandButton value="Ekle" action="#{kayitBean.ekle()}" update="@form"/>
 
 
-29 one-to-many bağlantıda iki tartan birden set etmekten kaçınmak için, yani şundan,
+29 one-to-many bağlantıda iki taraftan birden set etmekten kaçınmak için, yani şundan,
 
 
 kisi.setTelefonList(telefonList);
@@ -171,7 +171,7 @@ cepTel.setKisi(kisi);
 evTel.setKisi(kisi);
 
 
-master clasın prepersist ve preupdate metodlarını set ediyoruz.
+master classın prepersist ve preupdate metodlarını set ediyoruz.
 
 
 

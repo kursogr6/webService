@@ -54,7 +54,7 @@ public class Kisi implements Serializable {
     @Size(min = 1, max = 20)
     @Column(nullable = false, length = 20)
     private String soyad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kisi")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "kisi")//HER İKİ TARAFTAN JOİN VARSA KAYDETME YAPILACAĞI ZAMAN HER İKİ CLASS TADA SET YAPILAMLI. YOKSA @preupdate ve @prepersist yapmamız lazım . otomatik yapar
     private List<Telefon> telefonList;
 
     public Kisi() {
@@ -74,22 +74,22 @@ public class Kisi implements Serializable {
         return id;
     }
     
-    @PrePersist
-    public void prePersistMethod()
-    {
-        for (Telefon telefon : telefonList) {
-            telefon.setKisi(this);
-        }
-    }
-    
-    
-    @PreUpdate
-    public void preUpdateMethod()
-    {
-        for (Telefon telefon : telefonList) {
-            telefon.setKisi(this);
-        }
-    }
+//    @PrePersist
+//    public void prePersistMethod()
+//    {
+//        for (Telefon telefon : telefonList) {
+//            telefon.setKisi(this);
+//        }
+//    }
+//    
+//    
+//    @PreUpdate
+//    public void preUpdateMethod()
+//    {
+//        for (Telefon telefon : telefonList) {
+//            telefon.setKisi(this);
+//        }
+//    }
 
     public void setId(Integer id) {
         this.id = id;

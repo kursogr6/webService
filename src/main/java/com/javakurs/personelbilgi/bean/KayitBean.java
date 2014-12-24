@@ -80,7 +80,6 @@ public class KayitBean {
         evTel = new Telefon();
         
         
-        
     }
     
     
